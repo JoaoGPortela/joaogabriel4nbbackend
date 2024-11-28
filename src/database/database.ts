@@ -13,8 +13,8 @@ const dataSource = new DataSource({
   logging: false,
   entities: [
     // Suas entidades aqui
-    require("./entities/User").User,
-    require("./entities/Book").Book,
+    require("./models/User").User,
+    require("./models/Book").Book,
   ],
 });
 

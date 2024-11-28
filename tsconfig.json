@@ -1,15 +1,17 @@
 {
-  
-    "compilerOptions": {
-      "target": "ES6",
-      "experimentalDecorators": true,
-      "emitDecoratorMetadata": true,
-      "esModuleInterop": true,
-      "moduleResolution": "node",
-      "module": "commonjs"
+  "compilerOptions": {
+    "target": "ES6",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "baseUrl": "./src",  // Isso permite resolver os caminhos a partir da pasta src
+    "paths": {
+      "*": ["node_modules/*", "src/*"] // Isso ajuda o TypeScript a entender onde procurar os arquivos
     },
-  
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules"]
-  }
-  
+    "outDir": "./dist" // Pasta onde os arquivos compilados serão colocados
+  },
+  "include": ["src/**/*.ts"],  // Inclui todos os arquivos .ts dentro da pasta src
+  "exclude": ["node_modules"]  // Exclui a pasta node_modules
+}
