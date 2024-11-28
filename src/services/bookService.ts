@@ -1,10 +1,10 @@
-import { AppDataSource } from "../database/database";
+import { dataSource } from "../database/database";
 import { Book } from "../models/Book";
 
 export class BookService {
   static async create({ title, author }: { title: string, author: string }) {
     try {
-      const bookRepository = AppDataSource.getRepository(Book);
+      const bookRepository = dataSource.getRepository(Book);
       const book = bookRepository.create({
         title,
         author,
@@ -18,7 +18,7 @@ export class BookService {
 
   static async getAll() {
     try {
-      const bookRepository = AppDataSource.getRepository(Book);
+      const bookRepository = dataSource.getRepository(Book);
       return await bookRepository.find();
     } catch (error: any) {  // Especificando tipo `any` para capturar qualquer tipo de erro
       throw new Error(error.message);
@@ -27,7 +27,7 @@ export class BookService {
 
   static async getOne(id: string) {
     try {
-      const bookRepository = AppDataSource.getRepository(Book);
+      const bookRepository = dataSource.getRepository(Book);
       const book = await bookRepository.findOneBy({ id: parseInt(id) });
       if (!book) throw new Error("Livro não encontrado.");
       return book;
@@ -38,7 +38,7 @@ export class BookService {
 
   static async update(id: string, { title, author }: { title?: string, author?: string }) {
     try {
-      const bookRepository = AppDataSource.getRepository(Book);
+      const bookRepository = dataSource.getRepository(Book);
       const book = await bookRepository.findOneBy({ id: parseInt(id) });
     
       if (!book) throw new Error("Livro não encontrado.");
@@ -55,7 +55,7 @@ export class BookService {
 
   static async delete(id: string) {
     try {
-      const bookRepository = AppDataSource.getRepository(Book);
+      const bookRepository = dataSource.getRepository(Book);
       const book = await bookRepository.findOneBy({ id: parseInt(id) });
     
       if (!book) throw new Error("Livro não encontrado.");

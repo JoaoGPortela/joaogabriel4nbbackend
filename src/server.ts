@@ -1,21 +1,33 @@
 import express from "express";
-import { AppDataSource } from "./database/database";
-import userRoutes from "./routes/userRoutes";
-import bookRoutes from "./routes/bookRoutes";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { dataSource } from "./database/database"; // Importa a configuração do DataSource
+import { UserController } from "./controllers/UserController";
+import { BookController } from "./controllers/bookController";
 
 const app = express();
+const port = 3000;
+
 app.use(express.json());
 
-app.use("/users", userRoutes);
-app.use("/books", bookRoutes);
-
-AppDataSource.initialize()
+// Tenta conectar ao banco de dados
+dataSource.initialize()
   .then(() => {
-    app.listen(3000, () => {
-      console.log("Servidor rodando na porta 3000");
-    });
+    console.log("Conectado ao banco de dados com sucesso!");
   })
-  .catch((error) => console.log("Erro ao conectar ao banco:", error));
+  .catch((err) => {
+    console.error("Erro ao conectar ao banco de dados:", err);
+  });
+
+// Definindo as rotas para o UserController
+app.post("/register", UserController.register);
+app.post("/login", UserController.login);
+
+// Definindo as rotas para o BookController
+app.post("/books", BookController.create);
+app.get("/books", BookController.getAll);
+app.get("/books/:id", BookController.getOne);
+app.put("/books/:id", BookController.update);
+app.delete("/books/:id", BookController.delete);
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

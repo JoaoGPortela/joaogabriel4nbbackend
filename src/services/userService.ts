@@ -1,4 +1,4 @@
-import { AppDataSource } from "../database/database";
+import { dataSource } from "../database/database";
 import { User } from "../models/User";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 export class UserService {
   static async register({ name, email, password }: { name: string, email: string, password: string }) {
     try {
-      const userRepository = AppDataSource.getRepository(User);
+      const userRepository = dataSource.getRepository(User);
     
       const existingUser = await userRepository.findOneBy({ email });
       if (existingUser) throw new Error("Usuário já existe.");
@@ -28,7 +28,7 @@ export class UserService {
 
   static async login({ email, password }: { email: string, password: string }) {
     try {
-      const userRepository = AppDataSource.getRepository(User);
+      const userRepository = dataSource.getRepository(User);
       const user = await userRepository.findOneBy({ email });
 
       if (!user) throw new Error("Usuário não encontrado.");
