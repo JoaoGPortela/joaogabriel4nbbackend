@@ -26,11 +26,17 @@ Devido a dificuldades com o projeto conseguimos um meio de realiza-lo utilizando
 
 Como usar
 
-Após instalação do projeto realize um npm install em seu terminal dentro do projeto para instalação das dependências de node_modules e execute o servidor
-compila caso precise
-npm run build
-starta o server
-npm start
+dependencias do backend
+principais: npm install express cors dotenv sequelize pg bcrypt jsonwebtoken
+de desenvolvimento: npm install -D typescript @types/express @types/cors @types/node @types/jsonwebtoken @types/bcrypt ts-node-dev
+
+dependencias do frontend
+principais: npm install react react-dom react-router-dom
+de desenvolvimento: npm install -D typescript @types/react @types/react-dom @types/react-router-dom vite
+
+No backend npm run dev
+No frontend npm run start
+
 criar usuario
 curl -X POST http://localhost:3000/auth/register -H "Content-Type: application/json" -d "{\"username\":\"newuser\", \"password\":\"securepassword\"}"
 
