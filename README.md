@@ -1,6 +1,7 @@
 Documentação do projeto backend
 
 Fizemos um backend focado em registro e login de usuário, fornecendo um token jwt como o desejado.
+João Gabriel e Breno Feitoza
 
 -----------------------------------------------------------------------------------------
 
