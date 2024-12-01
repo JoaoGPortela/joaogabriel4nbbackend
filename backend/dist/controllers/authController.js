@@ -22,7 +22,9 @@ class AuthController {
                 res.status(200).json({ token });
             }
             catch (error) {
-                res.status(401).json({ error: 'error.message' });
+                // Verificando se o erro é uma instância de Error, caso contrário, trata como um erro genérico
+                const errorMessage = error instanceof Error ? error.message : 'Erro inesperado no login';
+                res.status(401).json({ error: errorMessage });
             }
         });
     }
@@ -34,7 +36,9 @@ class AuthController {
                 res.status(201).json(user);
             }
             catch (error) {
-                res.status(400).json({ error: 'error.message' });
+                // Verificando se o erro é uma instância de Error, caso contrário, trata como um erro genérico
+                const errorMessage = error instanceof Error ? error.message : 'Erro inesperado ao registrar usuário';
+                res.status(400).json({ error: errorMessage });
             }
         });
     }

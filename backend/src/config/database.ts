@@ -12,11 +12,11 @@ if (!databaseUrl) {
 const sequelize = new Sequelize(databaseUrl, {
   dialect: 'postgres',
   protocol: 'postgres',
-  logging: console.log, // Exibe logs do Sequelize no console
+  logging: console.log, 
   dialectOptions: {
     ssl: {
-      require: true, // Certifique-se de que SSL é exigido para conexões externas
-      rejectUnauthorized: false, // Permite conexões sem verificação do certificado
+      require: true,
+      rejectUnauthorized: false, 
     },
   },
 });

@@ -1,4 +1,4 @@
-import { User } from '../models/user';
+import { User } from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import UserRepository from '../repositories/UserRepository';
@@ -7,28 +7,29 @@ class AuthServices {
   private userRepository = new UserRepository();
 
   async register(username: string, password: string): Promise<User> {
-    console.log("Iniciando registro...");  // Log de depuração
-    
-    const existingUser = await this.userRepository.findByUsername(username);
-    if (existingUser) {
-      throw new Error('Nome de usuário já existe.');
+    try {
+      const existingUser = await User.findOne({ where: { username } });
+      if (existingUser) {
+        throw new Error('Nome de usuário já existe.');
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const newUser = await User.create({
+        username,
+        password: hashedPassword,
+      });
+
+      return newUser;
+    } catch (error) {
+      console.error("Erro ao tentar registrar:", error); 
+      if (error instanceof Error) {
+        throw new Error(error.message); 
+      } else {
+        throw new Error('Erro inesperado ao registrar o usuário.');
+      }
     }
-
-    // Log para ver o usuário
-    console.log("Criando novo usuário...");
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = await this.userRepository.create({
-      username,
-      password: hashedPassword,
-    });
-
-    console.log("Usuário criado:", newUser);  // Log de depuração
-    
-    return newUser;
   }
-
+  
   async authenticate(username: string, password: string): Promise<string> {
     console.log("Iniciando autenticação...");
 
@@ -46,7 +47,7 @@ class AuthServices {
       expiresIn: '1h',
     });
 
-    console.log("Token gerado:", token);  // Log de depuração
+    console.log("Token gerado:", token); 
 
     return token;
   }

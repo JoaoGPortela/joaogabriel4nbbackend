@@ -8,21 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_1 = __importDefault(require("../models/user"));
+const user_1 = require("../models/user");
 class UserRepository {
     findByUsername(username) {
         return __awaiter(this, void 0, void 0, function* () {
-            return user_1.default.findOne({ where: { username } });
+            console.log(`Buscando usuário com o nome: ${username}`);
+            return yield user_1.User.findOne({ where: { username } });
         });
     }
     create(userData) {
         return __awaiter(this, void 0, void 0, function* () {
-            return user_1.default.create(userData); // Aqui está alinhado com os tipos esperados pelo Sequelize
+            console.log("Criando usuário:", userData);
+            return yield user_1.User.create(userData);
         });
     }
 }
-exports.default = new UserRepository();
+exports.default = UserRepository;
